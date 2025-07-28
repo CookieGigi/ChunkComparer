@@ -16,14 +16,16 @@ const App = () => {
 	) => {
 		const text = e.target.value;
 		setText(text);
-		computeChunk(text);
 	};
 
 	useEffect(() => {
-		computeChunk(text);
-	}, [chunker]);
+		computeChunk(text, chunker);
+	}, [chunker, text]);
 
-	const computeChunk = (text: string | undefined) => {
+	const computeChunk = (
+		text: string | undefined,
+		chunker: string | undefined,
+	) => {
 		if (text === undefined) return;
 		if (chunker === undefined) return;
 		if (configs[chunker] === undefined) return;
