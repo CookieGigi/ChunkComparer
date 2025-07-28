@@ -1,5 +1,6 @@
 import CharacterTextChunker from "./CharacterTextChunker";
 import type ITextChunker from "./ITextChunker";
+import RecursiveCharacterTextChunker from "./RecursiveCharacterTextChunker";
 
 export class ChunkerConfig {
 	id: string;
@@ -26,14 +27,16 @@ export class ChunkerConfig {
 export const configs: { [key: string]: ChunkerConfig } = {
 	nbChar: new ChunkerConfig("nbChar", CharacterTextChunker, {
 		separator: "",
-		chunkSize: 10,
-		chunkOverlap: 2,
+		chunkSize: 100,
+		chunkOverlap: 0,
 		keepSeparator: true,
 	}),
-	nbChar30: new ChunkerConfig("nbChar", CharacterTextChunker, {
-		separator: "",
-		chunkSize: 30,
-		chunkOverlap: 2,
-		keepSeparator: true,
-	}),
+	recursiveChar: new ChunkerConfig(
+		"recursiveChar",
+		RecursiveCharacterTextChunker,
+		{
+			chunkSize: 100,
+			chunkOverlap: 0,
+		},
+	),
 };
