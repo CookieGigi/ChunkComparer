@@ -1,0 +1,43 @@
+import { useEffect, useState } from "react";
+import type { JSX } from "react/jsx-runtime";
+import { Chunk } from "../types/Chunk";
+import ChunkPartVisualizer from "./ChunkPartVisualizer";
+
+const highlightChunks = (chunks: Chunk[]): JSX.Element[] => {
+	const highlightedText: JSX.Element[] = [];
+	const colors = ["#70d6ff", "#e9ff70", "#ff9770", "#ffd670", "#ff70a6"];
+	const colorOverlap = "#00FA9A";
+
+	chunks.forEach((chunk, index) => {
+		const color = colors[index % colors.length];
+
+		highlightedText.push(
+			<ChunkPartVisualizer
+				text={chunk.uniquePart}
+				color={color}
+			></ChunkPartVisualizer>,
+		);
+
+		// Add overlap part only if it's not the last chunk
+		if (chunk.HasOverlapNextPart) {
+			highlightedText.push(
+				<ChunkPartVisualizer
+					text={chunk.overlapPart.next}
+					color={colorOverlap}
+				></ChunkPartVisualizer>,
+			);
+		}
+	});
+
+	return highlightedText;
+};
+
+export default function ChunkedTextVisualizer({ chunks }: { chunks: Chunk[] }) {
+	const [textHighlight, setTextHighlight] = useState<JSX.Element[]>([]);
+
+	useEffect(() => {
+		setTextHighlight(highlightChunks(chunks));
+	}, [chunks]);
+
+	return <div>{textHighlight.map((chunk) => chunk)}</div>;
+}

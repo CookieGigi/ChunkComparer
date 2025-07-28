@@ -1,0 +1,11 @@
+.layoutContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
