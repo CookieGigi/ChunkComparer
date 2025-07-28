@@ -11,11 +11,15 @@ export default class MarkdownTextChunker
 
 		const res: Chunk[] = [];
 		for (text of textSplit) {
-			res.push(
-				new Chunk(text, { prev: this.chunkOverlap, next: this.chunkOverlap }),
-			);
+			res.push(new Chunk(text, { prev: 0, next: 0 }));
 		}
 
 		return res;
+	}
+
+	private override joinDocs(docs, separator) {
+		// LangChain trims chunks, we don't want that for visuals!
+		// Hacky override
+		return docs.join(separator);
 	}
 }
