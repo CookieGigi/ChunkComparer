@@ -46,6 +46,14 @@ const App = () => {
 			</div>
 			<div className="mainContainer">
 				<textarea className="textContainer" onChange={onChange}></textarea>
+				<p>Total character: {text?.length}</p>
+				<p>Total chunk: {chunks.length}</p>
+				<p>
+					Avg chunk size:{" "}
+					{(
+						chunks.reduce((a, b) => a + b.text.length, 0) / chunks.length
+					).toFixed(1)}
+				</p>
 				<ChunkedTextVisualizer chunks={chunks}></ChunkedTextVisualizer>
 			</div>
 		</div>
