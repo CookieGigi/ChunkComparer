@@ -21,4 +21,10 @@ export default class CharacterTextChunker
 
 		return res;
 	}
+
+	private override joinDocs(docs, separator) {
+		// LangChain trims chunks, we don't want that for visuals!
+		// Hacky override
+		return docs.join(separator);
+	}
 }

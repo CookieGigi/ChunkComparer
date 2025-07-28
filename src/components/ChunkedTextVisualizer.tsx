@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import type { JSX } from "react/jsx-runtime";
-import { Chunk } from "../types/Chunk";
+import type { Chunk } from "../types/Chunk";
 import ChunkPartVisualizer from "./ChunkPartVisualizer";
+import "./ChunkedTextVisualizer.css";
 
 const highlightChunks = (chunks: Chunk[]): JSX.Element[] => {
 	const highlightedText: JSX.Element[] = [];
@@ -10,6 +11,15 @@ const highlightChunks = (chunks: Chunk[]): JSX.Element[] => {
 
 	chunks.forEach((chunk, index) => {
 		const color = colors[index % colors.length];
+
+		if (index === 0) {
+			highlightedText.push(
+				<ChunkPartVisualizer
+					text={chunk.overlapPart.prev}
+					color={colorOverlap}
+				></ChunkPartVisualizer>,
+			);
+		}
 
 		highlightedText.push(
 			<ChunkPartVisualizer
@@ -39,5 +49,7 @@ export default function ChunkedTextVisualizer({ chunks }: { chunks: Chunk[] }) {
 		setTextHighlight(highlightChunks(chunks));
 	}, [chunks]);
 
-	return <div>{textHighlight.map((chunk) => chunk)}</div>;
+	return (
+		<div className="textVisualizer">{textHighlight.map((chunk) => chunk)}</div>
+	);
 }

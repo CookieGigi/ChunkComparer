@@ -28,7 +28,7 @@ const App = () => {
 	return (
 		<div className="layoutContainer">
 			<div className="mainContainer">
-				<textarea onChange={onChange}></textarea>
+				<textarea className="textContainer" onChange={onChange}></textarea>
 				<ChunkedTextVisualizer chunks={chunks}></ChunkedTextVisualizer>
 			</div>
 		</div>

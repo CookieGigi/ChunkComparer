@@ -1,0 +1,5 @@
+.textVisualizer {
+	overflow-wrap: break-word;
+	height: 50vh;
+	overflow-y: scroll;
+}
