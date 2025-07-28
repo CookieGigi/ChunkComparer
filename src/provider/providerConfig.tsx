@@ -1,7 +1,9 @@
 import CharacterTextChunker from "./CharacterTextChunker";
 import type ITextChunker from "./ITextChunker";
+import LatexTextChunker from "./LatexTextChunker";
 import MarkdownTextChunker from "./MarkdownTextChunker";
 import RecursiveCharacterTextChunker from "./RecursiveCharacterTextChunker";
+import TokenTextChunker from "./TokenTextChunker";
 
 export class ChunkerConfig {
 	id: string;
@@ -40,5 +42,16 @@ export const configs: { [key: string]: ChunkerConfig } = {
 			chunkOverlap: 0,
 		},
 	),
-	markdown: new ChunkerConfig("markdown", MarkdownTextChunker, {}),
+	token: new ChunkerConfig("token", TokenTextChunker, {
+		chunkSize: 500,
+		chunkOverlap: 0,
+	}),
+	markdown: new ChunkerConfig("markdown", MarkdownTextChunker, {
+		chunkSize: 500,
+		chunkOverlap: 0,
+	}),
+	latex: new ChunkerConfig("latex", LatexTextChunker, {
+		chunkSize: 500,
+		chunkOverlap: 0,
+	}),
 };
