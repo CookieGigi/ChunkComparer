@@ -1,16 +1,21 @@
 .layoutContainer {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
 }
 
 .mainContainer {
-	display: flex;
-	flex-direction: column;
-	width: 50%;
-	gap: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  gap: 20px;
+}
+
+.sideContainer {
+  display: flex;
+  width: 25%;
 }
 
 .textContainer {
-	height: 40vh;
+  height: 40vh;
 }

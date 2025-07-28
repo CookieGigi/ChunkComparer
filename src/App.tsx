@@ -1,32 +1,47 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import ChunkedTextVisualizer from "./components/ChunkedTextVisualizer";
-import CharacterTextChunker from "./provider/CharacterTextChunker";
+import ChunkerSelector from "./components/ChunkerSelector";
 import type ITextChunker from "./provider/ITextChunker";
 import type { Chunk } from "./types/Chunk";
-
-const chunker: ITextChunker = new CharacterTextChunker({
-	separator: "",
-	chunkSize: 10,
-	chunkOverlap: 2,
-	keepSeparator: true,
-});
+import { configs } from "./provider/providerConfig";
 
 const App = () => {
 	const [chunks, setChunks] = useState<Chunk[]>([]);
+	const [chunker, setChunker] = useState<string>();
+	const [text, setText] = useState<string>();
 
 	const onChange: React.ChangeEventHandler<HTMLTextAreaElement> = (
 		e: React.ChangeEvent<HTMLTextAreaElement>,
 	) => {
 		const text = e.target.value;
+		setText(text);
+		computeChunk(text);
+	};
 
-		if (text == null) return;
+	useEffect(() => {
+		computeChunk(text);
+	}, [chunker]);
 
-		chunker.splitChunks(text).then((chunks) => setChunks(chunks));
+	const computeChunk = (text: string | undefined) => {
+		if (text === undefined) return;
+		if (chunker === undefined) return;
+		if (configs[chunker] === undefined) return;
+
+		configs[chunker]
+			.InstantiateChunker()
+			.splitChunks(text)
+			.then((chunks) => setChunks(chunks));
 	};
 
 	return (
 		<div className="layoutContainer">
+			<div className="sideContainer">
+				<ChunkerSelector
+					current={chunker}
+					setChunker={setChunker}
+				></ChunkerSelector>
+			</div>
 			<div className="mainContainer">
 				<textarea className="textContainer" onChange={onChange}></textarea>
 				<ChunkedTextVisualizer chunks={chunks}></ChunkedTextVisualizer>
