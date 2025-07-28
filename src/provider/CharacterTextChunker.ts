@@ -11,9 +11,6 @@ export default class CharacterTextChunker
 
 		const res: Chunk[] = [];
 		for (text of textSplit) {
-			if (this.separator === " ") {
-				text += " ";
-			}
 			res.push(
 				new Chunk(text, { prev: this.chunkOverlap, next: this.chunkOverlap }),
 			);
