@@ -1,0 +1,10 @@
+.mainContainer {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+}
+
+.cardContainer {
+	min-width: 500px;
+	width: 30%;
+}

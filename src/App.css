@@ -1,22 +1,33 @@
 .layoutContainer {
 	display: flex;
-	flex-direction: row;
-	justify-content: start;
-}
-
-.mainContainer {
-	display: flex;
 	flex-direction: column;
-	width: 50%;
+	justify-content: start;
 	gap: 20px;
 }
 
-.sideContainer {
+.inputContainer {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+}
+
+.visualizerContainer {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.configContainer {
 	display: flex;
 	flex-direction: column;
 	width: 25%;
 }
 
 .textContainer {
+	width: 50%;
+}
+
+.textInput {
 	height: 40vh;
+	width: 100%;
 }

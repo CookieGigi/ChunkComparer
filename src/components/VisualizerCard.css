@@ -1,0 +1,29 @@
+.card {
+	border: 1px black solid;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	padding: 5px;
+}
+
+.card-header {
+	border-bottom: 1px black solid;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	gap: 5px;
+}
+
+.card-header-title {
+	font-weight: 700;
+	width: 25%;
+}
+
+.card-header-metric {
+	font-style: italic;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	gap: 5px;
+	width: 70%;
+}

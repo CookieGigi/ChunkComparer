@@ -22,13 +22,18 @@ const App = () => {
 
 	return (
 		<div className="layoutContainer">
-			<div className="sideContainer">
-				<ChunkerSelector
-					setChunkerConfigs={setChunkerConfigs}
-				></ChunkerSelector>
+			<div className="inputContainer">
+				<div className="configContainer">
+					<ChunkerSelector
+						setChunkerConfigs={setChunkerConfigs}
+					></ChunkerSelector>
+				</div>
+				<div className="textContainer">
+					<textarea className="textInput" onChange={onChange}></textarea>
+				</div>
 			</div>
-			<div className="mainContainer">
-				<textarea className="textContainer" onChange={onChange}></textarea>
+
+			<div className="visualizerContainer">
 				<VisualizersPanel
 					text={text}
 					chunkerConfigs={chunkerConfigs}
