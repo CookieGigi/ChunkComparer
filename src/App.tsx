@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./App.css";
+import styles from "./App.module.css";
 import ChunkerSelector from "./components/ChunkerSelector";
 import VisualizersPanel from "./components/VisualizersPanel";
 import type { ChunkerConfig } from "./provider/providerConfig";
@@ -21,19 +21,19 @@ const App = () => {
 	};
 
 	return (
-		<div className="layoutContainer">
-			<div className="inputContainer">
-				<div className="configContainer">
+		<div className={styles.layoutContainer}>
+			<div className={styles.inputContainer}>
+				<div className={styles.configContainer}>
 					<ChunkerSelector
 						setChunkerConfigs={setChunkerConfigs}
 					></ChunkerSelector>
 				</div>
-				<div className="textContainer">
-					<textarea className="textInput" onChange={onChange}></textarea>
+				<div className={styles.textContainer}>
+					<textarea className={styles.textInput} onChange={onChange}></textarea>
 				</div>
 			</div>
 
-			<div className="visualizerContainer">
+			<div className={styles.visualizerContainer}>
 				<VisualizersPanel
 					text={text}
 					chunkerConfigs={chunkerConfigs}

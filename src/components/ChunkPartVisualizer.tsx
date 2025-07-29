@@ -1,4 +1,4 @@
-import "./ChunkPartVisualizer.css";
+import styles from "./ChunkPartVisualizer.module.css";
 
 export default function ChunkPartVisualizer({
 	text,
@@ -8,7 +8,7 @@ export default function ChunkPartVisualizer({
 	color: string | undefined;
 }) {
 	return (
-		<span className="chunkPart" style={{ backgroundColor: color }}>
+		<span className={styles.chunkPart} style={{ backgroundColor: color }}>
 			{text}
 		</span>
 	);

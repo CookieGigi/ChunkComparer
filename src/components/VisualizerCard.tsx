@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import type { ChunkerConfig } from "../provider/providerConfig";
 import type { Chunk } from "../types/Chunk";
 import ChunkedTextVisualizer from "./ChunkedTextVisualizer";
-import "./VisualizerCard.css";
+import styles from "./VisualizerCard.module.css";
 
 export default function VisualizerCard({
 	text,
@@ -37,10 +37,10 @@ export default function VisualizerCard({
 	}, [chunkerConfig, text, computeChunk]);
 
 	return (
-		<div className="card">
-			<div className="card-header">
-				<span className="card-header-title">{title}</span>
-				<span className="card-header-metric">
+		<div className={styles.card}>
+			<div className={styles.cardHeader}>
+				<span className={styles.cardHeaderTitle}>{title}</span>
+				<span className={styles.cardHeaderMetric}>
 					{" "}
 					<span>{chunks.length} chunks</span>
 					<span className="card-header-metric">
@@ -51,7 +51,7 @@ export default function VisualizerCard({
 					</span>
 				</span>
 			</div>
-			<div className="card-body" ref={scrollRef} onScroll={onScroll}>
+			<div className={styles.cardBody} ref={scrollRef} onScroll={onScroll}>
 				<ChunkedTextVisualizer chunks={chunks}></ChunkedTextVisualizer>
 			</div>
 		</div>

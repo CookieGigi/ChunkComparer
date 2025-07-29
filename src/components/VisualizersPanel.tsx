@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import type { ChunkerConfig } from "../provider/providerConfig";
 import VisualizerCard from "./VisualizerCard";
-import "./VisualizersPanel.css";
+import styles from "./VisualizersPanel.module.css";
 
 export default function VisualizersPanel({
 	text,
@@ -27,20 +27,22 @@ export default function VisualizersPanel({
 	};
 
 	return (
-		<div className="mainContainer">
-			{Object.entries(chunkerConfigs ?? {}).map(([key, value]) => (
-				<div key={key} className="cardContainer">
-					<VisualizerCard
-						text={text}
-						chunkerConfig={value}
-						title={key}
-						scrollRef={(el: HTMLDivElement | null) => {
-							divRefs.current[key] = el;
-						}}
-						onScroll={() => handleScroll(key)}
-					></VisualizerCard>
-				</div>
-			))}
+		<div>
+			<div className={styles.mainContainer}>
+				{Object.entries(chunkerConfigs ?? {}).map(([key, value]) => (
+					<div key={key} className={styles.cardContainer}>
+						<VisualizerCard
+							text={text}
+							chunkerConfig={value}
+							title={key}
+							scrollRef={(el: HTMLDivElement | null) => {
+								divRefs.current[key] = el;
+							}}
+							onScroll={() => handleScroll(key)}
+						></VisualizerCard>
+					</div>
+				))}
+			</div>
 		</div>
 	);
 }

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import type { JSX } from "react/jsx-runtime";
 import type { Chunk } from "../types/Chunk";
+import styles from "./ChunkedTextVisualizer.module.css";
 import ChunkPartVisualizer from "./ChunkPartVisualizer";
-import "./ChunkedTextVisualizer.css";
 
 const highlightChunks = (chunks: Chunk[]): JSX.Element[] => {
 	const highlightedText: JSX.Element[] = [];
@@ -50,6 +50,8 @@ export default function ChunkedTextVisualizer({ chunks }: { chunks: Chunk[] }) {
 	}, [chunks]);
 
 	return (
-		<div className="textVisualizer">{textHighlight.map((chunk) => chunk)}</div>
+		<div className={styles.textVisualizer}>
+			{textHighlight.map((chunk) => chunk)}
+		</div>
 	);
 }
