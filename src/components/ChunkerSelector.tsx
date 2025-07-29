@@ -11,9 +11,11 @@ export default function ChunkerSelector({
 		<div>
 			<p>Current : {current}</p>
 
-			{Object.entries(configs).map(([key, value]) => (
+			{Object.entries(configs).map(([key, _value]) => (
 				<div key={key}>
-					<button onClick={() => setChunker(key)}>{key}</button>
+					<button type="button" onClick={() => setChunker(key)}>
+						{key}
+					</button>
 				</div>
 			))}
 		</div>
