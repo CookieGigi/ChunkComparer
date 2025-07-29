@@ -8,10 +8,14 @@ export default function VisualizerCard({
 	text,
 	chunkerConfig,
 	title,
+	scrollRef,
+	onScroll,
 }: {
 	text: string | undefined;
 	chunkerConfig: ChunkerConfig;
 	title: string | undefined;
+	scrollRef: (el: HTMLDivElement | null) => void;
+	onScroll: () => void;
 }) {
 	const [chunks, setChunks] = useState<Chunk[]>([]);
 
@@ -47,7 +51,7 @@ export default function VisualizerCard({
 					</span>
 				</span>
 			</div>
-			<div className="card-body">
+			<div className="card-body" ref={scrollRef} onScroll={onScroll}>
 				<ChunkedTextVisualizer chunks={chunks}></ChunkedTextVisualizer>
 			</div>
 		</div>

@@ -27,3 +27,8 @@
 	gap: 5px;
 	width: 70%;
 }
+
+.card-body {
+	height: 50vh;
+	overflow-y: scroll;
+}
