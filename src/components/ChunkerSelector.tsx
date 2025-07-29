@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { type ChunkerConfig, configs } from "../provider/providerConfig";
+import "./ChunkerSelector.css";
 
 export default function ChunkerSelector({
 	setChunkerConfigs,
@@ -34,18 +35,22 @@ export default function ChunkerSelector({
 	}, [configsCheck, setChunkerConfigs]);
 
 	return (
-		<div>
-			{configsCheck.map((config) => (
-				<div key={config.id}>
-					<label htmlFor={config.id}>{config.id}</label>
-					<input
-						id={config.id}
-						type="checkbox"
-						checked={config.checked}
-						onChange={() => handleChange(config.id)}
-					/>
-				</div>
-			))}
+		<div className="container">
+			<div className="header">Chunker configurations</div>
+			<div className="body">
+				{configsCheck.map((config) => (
+					<div key={config.id} className="checkboxContainer">
+						<input
+							id={config.id}
+							type="checkbox"
+							checked={config.checked}
+							onChange={() => handleChange(config.id)}
+							className="checkbox"
+						/>
+						<label htmlFor={config.id}>{config.id}</label>
+					</div>
+				))}
+			</div>
 		</div>
 	);
 }
