@@ -14,7 +14,8 @@
 .cardsContainer {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 20px;
+	column-gap: calc((100% - max(1500px, 90%)) / 2 );
+  row-gap: 20px;
 }
 
 .cardContainer {
