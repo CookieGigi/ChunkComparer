@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import { type ChunkerConfig, configs } from "../provider/providerConfig";
+import type { ChunkerConfig } from "../provider/providerConfig";
 import styles from "./ChunkerSelector.module.css";
 
 export default function ChunkerSelector({
 	setChunkerConfigs,
+	configs,
 }: {
 	setChunkerConfigs: React.Dispatch<
 		React.SetStateAction<{ [key: string]: ChunkerConfig } | undefined>
 	>;
+	configs: { [key: string]: ChunkerConfig };
 }) {
 	const configList = Object.entries(configs).map(([id, _value]) => ({
 		id: id,
@@ -32,7 +34,7 @@ export default function ChunkerSelector({
 			}
 		}
 		setChunkerConfigs(res);
-	}, [configsCheck, setChunkerConfigs]);
+	}, [configsCheck, setChunkerConfigs, configs]);
 
 	return (
 		<div className={styles.container}>
@@ -42,6 +44,7 @@ export default function ChunkerSelector({
 					<div key={config.id}>
 						<input
 							id={config.id}
+							data-testid={`chunkerselector-${config.id}`}
 							type="checkbox"
 							checked={config.checked}
 							onChange={() => handleChange(config.id)}

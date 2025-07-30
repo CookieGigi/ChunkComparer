@@ -10,6 +10,7 @@ export default function VisualizerSettings() {
 			<div className={styles.zoomContainer}>
 				<button
 					type="button"
+					data-testid="unzoom"
 					onClick={() => {
 						updateSettings(Settings.unzoom(settings));
 					}}
@@ -18,6 +19,7 @@ export default function VisualizerSettings() {
 				</button>
 				<button
 					type="button"
+					data-testid="resetzoom"
 					onClick={() => {
 						updateSettings(Settings.resetZoom(settings));
 					}}
@@ -26,6 +28,7 @@ export default function VisualizerSettings() {
 				</button>
 				<button
 					type="button"
+					data-testid="zoom"
 					onClick={() => {
 						updateSettings(Settings.zoom(settings));
 					}}

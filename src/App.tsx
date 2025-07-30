@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "./App.module.css";
 import ChunkerSelector from "./components/ChunkerSelector";
 import VisualizersPanel from "./components/VisualizersPanel";
-import type { ChunkerConfig } from "./provider/providerConfig";
+import { type ChunkerConfig, configs } from "./provider/providerConfig";
 
 const App = () => {
 	const [chunkerConfigs, setChunkerConfigs] = useState<
@@ -26,6 +26,7 @@ const App = () => {
 				<div className={styles.configContainer}>
 					<ChunkerSelector
 						setChunkerConfigs={setChunkerConfigs}
+						configs={configs}
 					></ChunkerSelector>
 				</div>
 				<div className={styles.textContainer}>

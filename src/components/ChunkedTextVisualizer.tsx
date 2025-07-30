@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import type { JSX } from "react/jsx-runtime";
-import { useSettings } from "../contexts/SettingsContext";
 import type { Chunk } from "../types/Chunk";
 import styles from "./ChunkedTextVisualizer.module.css";
 import ChunkPartVisualizer from "./ChunkPartVisualizer";
@@ -43,17 +42,25 @@ const highlightChunks = (chunks: Chunk[]): JSX.Element[] => {
 	return highlightedText;
 };
 
-export default function ChunkedTextVisualizer({ chunks }: { chunks: Chunk[] }) {
+export default function ChunkedTextVisualizer({
+	chunks,
+	zoom,
+}: {
+	chunks: Chunk[];
+	zoom: number | undefined;
+}) {
 	const [textHighlight, setTextHighlight] = useState<JSX.Element[]>([]);
 
 	useEffect(() => {
 		setTextHighlight(highlightChunks(chunks));
 	}, [chunks]);
 
-	const { settings } = useSettings();
-
 	return (
-		<div className={styles.textVisualizer} style={{ zoom: settings.zoomValue }}>
+		<div
+			className={styles.textVisualizer}
+			data-testid="testVisualizerContainer"
+			style={{ zoom: zoom === undefined ? 1 : zoom }}
+		>
 			{textHighlight.map((chunk) => chunk)}
 		</div>
 	);

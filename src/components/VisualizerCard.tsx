@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { useSettings } from "../contexts/SettingsContext";
 import type { ChunkerConfig } from "../provider/providerConfig";
 import type { Chunk } from "../types/Chunk";
 import ChunkedTextVisualizer from "./ChunkedTextVisualizer";
@@ -36,6 +37,8 @@ export default function VisualizerCard({
 		computeChunk(text, chunkerConfig);
 	}, [chunkerConfig, text, computeChunk]);
 
+	const { settings } = useSettings();
+
 	return (
 		<div className={styles.card}>
 			<div className={styles.cardHeader}>
@@ -52,7 +55,10 @@ export default function VisualizerCard({
 				</span>
 			</div>
 			<div className={styles.cardBody} ref={scrollRef} onScroll={onScroll}>
-				<ChunkedTextVisualizer chunks={chunks}></ChunkedTextVisualizer>
+				<ChunkedTextVisualizer
+					chunks={chunks}
+					zoom={settings.zoomValue}
+				></ChunkedTextVisualizer>
 			</div>
 		</div>
 	);
