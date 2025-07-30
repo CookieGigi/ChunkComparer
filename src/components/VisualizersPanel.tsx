@@ -1,6 +1,9 @@
 import { useRef } from "react";
+import { SettingsProvider } from "../contexts/SettingsContext";
 import type { ChunkerConfig } from "../provider/providerConfig";
+import { defaultSettings } from "../types/Settings";
 import VisualizerCard from "./VisualizerCard";
+import VisualizerSettings from "./VisualizerSettings";
 import styles from "./VisualizersPanel.module.css";
 
 export default function VisualizersPanel({
@@ -27,22 +30,27 @@ export default function VisualizersPanel({
 	};
 
 	return (
-		<div>
+		<SettingsProvider initialSettings={defaultSettings}>
 			<div className={styles.mainContainer}>
-				{Object.entries(chunkerConfigs ?? {}).map(([key, value]) => (
-					<div key={key} className={styles.cardContainer}>
-						<VisualizerCard
-							text={text}
-							chunkerConfig={value}
-							title={key}
-							scrollRef={(el: HTMLDivElement | null) => {
-								divRefs.current[key] = el;
-							}}
-							onScroll={() => handleScroll(key)}
-						></VisualizerCard>
-					</div>
-				))}
+				<div className={styles.settingsContainer}>
+					<VisualizerSettings />
+				</div>
+				<div className={styles.cardsContainer}>
+					{Object.entries(chunkerConfigs ?? {}).map(([key, value]) => (
+						<div key={key} className={styles.cardContainer}>
+							<VisualizerCard
+								text={text}
+								chunkerConfig={value}
+								title={key}
+								scrollRef={(el: HTMLDivElement | null) => {
+									divRefs.current[key] = el;
+								}}
+								onScroll={() => handleScroll(key)}
+							></VisualizerCard>
+						</div>
+					))}
+				</div>
 			</div>
-		</div>
+		</SettingsProvider>
 	);
 }
