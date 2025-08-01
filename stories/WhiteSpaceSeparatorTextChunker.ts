@@ -4,7 +4,6 @@ import { Chunk } from "../src/types/Chunk";
 export default class WhiteSpaceSeparatorTextChunker implements ITextChunker {
 	async splitChunks(text: string): Promise<Chunk[]> {
 		const textSplit = text.split(" ");
-		console.log(textSplit);
 
 		const res: Chunk[] = [];
 		for (text of textSplit) {
