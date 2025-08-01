@@ -1,10 +1,13 @@
-import { useSettings } from "../contexts/SettingsContext";
 import { Settings } from "../types/Settings";
 import styles from "./VisualizerSettings.module.css";
 
-export default function VisualizerSettings() {
-	const { settings, updateSettings } = useSettings();
-
+export default function VisualizerSettings({
+	settings,
+	onChange,
+}: {
+	settings: Settings;
+	onChange: (newSettings: Settings) => void;
+}) {
 	return (
 		<div className={styles.container}>
 			<div className={styles.zoomContainer}>
@@ -12,7 +15,7 @@ export default function VisualizerSettings() {
 					type="button"
 					data-testid="unzoom"
 					onClick={() => {
-						updateSettings(Settings.unzoom(settings));
+						onChange(Settings.unzoom(settings));
 					}}
 				>
 					-
@@ -21,7 +24,7 @@ export default function VisualizerSettings() {
 					type="button"
 					data-testid="resetzoom"
 					onClick={() => {
-						updateSettings(Settings.resetZoom(settings));
+						onChange(Settings.resetZoom(settings));
 					}}
 				>
 					|
@@ -30,7 +33,7 @@ export default function VisualizerSettings() {
 					type="button"
 					data-testid="zoom"
 					onClick={() => {
-						updateSettings(Settings.zoom(settings));
+						onChange(Settings.zoom(settings));
 					}}
 				>
 					+
