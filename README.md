@@ -1,36 +1,23 @@
-# Rsbuild project
+# ChunkComparer
 
-## Setup
+## Description
+A simple web tool to visualize and compare methods for splitting text into chunks.
 
-Install the dependencies:
+## Motivation
+This project serves as a learning exercise for me with two main goals:
+- To update myself on the React ecosystem.
+- To gain a deeper understanding of text-splitting methods, which are crucial in the context of document indexing in vector databases.
 
-```bash
-pnpm install
-```
+## Installation
+1. Clone the repository: `git clone https://github.com/yourusername/ChunkComparer.git`
+2. Navigate to the project directory: `cd ChunkComparer`
+3. Install dependencies: `yarn`
+4. Start the development server: `yarn dev`
 
-## Get started
+## Usage
+1. Open your web browser and navigate to `http://localhost:3000`
+2. Use the interface to visualize and compare different text-splitting methods.
+![ScreenShot of ChunkComparer](./assets/screenShotChunkComparer.png)
 
-Start the dev server, and the app will be available at [http://localhost:3000](http://localhost:3000).
-
-```bash
-pnpm dev
-```
-
-Build the app for production:
-
-```bash
-pnpm build
-```
-
-Preview the production build locally:
-
-```bash
-pnpm preview
-```
-
-## Learn more
-
-To learn more about Rsbuild, check out the following resources:
-
-- [Rsbuild documentation](https://rsbuild.rs) - explore Rsbuild features and APIs.
-- [Rsbuild GitHub repository](https://github.com/web-infra-dev/rsbuild) - your feedback and contributions are welcome!
+## Inspired by
+- [ChunkViz](https://github.com/gkamradt/ChunkViz)
