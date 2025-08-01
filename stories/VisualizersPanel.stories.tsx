@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from "storybook-react-rsbuild";
 import VisualizersPanel from "../src/components/VisualizersPanel";
 import { chunkerConfig, contextDecorator } from "./common";
 import "./testUtils";
+import { defaultSettings } from "../src/types/Settings";
 
 const meta = {
 	component: VisualizersPanel,
@@ -42,19 +43,28 @@ export const Zoom: Story = {
 		};
 
 		const canvas = within(canvasElement);
-		exceptZoomValue(canvas, 1);
+		exceptZoomValue(canvas, defaultSettings.zoomValue);
 		await userEvent.click(canvas.getByTestId("zoom"));
-		exceptZoomValue(canvas, 1.1);
+		exceptZoomValue(
+			canvas,
+			defaultSettings.zoomValue + defaultSettings.zoomIncrement,
+		);
 		await userEvent.click(canvas.getByTestId("unzoom"));
-		exceptZoomValue(canvas, 1);
+		exceptZoomValue(canvas, defaultSettings.zoomValue);
 		await userEvent.click(canvas.getByTestId("unzoom"));
-		exceptZoomValue(canvas, 0.9);
+		exceptZoomValue(
+			canvas,
+			defaultSettings.zoomValue - defaultSettings.zoomIncrement,
+		);
 		await userEvent.click(canvas.getByTestId("zoom"));
-		exceptZoomValue(canvas, 1);
+		exceptZoomValue(canvas, defaultSettings.zoomValue);
 		await userEvent.click(canvas.getByTestId("zoom"));
-		exceptZoomValue(canvas, 1.1);
+		exceptZoomValue(
+			canvas,
+			defaultSettings.zoomValue + defaultSettings.zoomIncrement,
+		);
 		await userEvent.click(canvas.getByTestId("resetzoom"));
-		exceptZoomValue(canvas, 1);
+		exceptZoomValue(canvas, defaultSettings.zoomValue);
 	},
 };
 
@@ -70,12 +80,14 @@ export const SyncScroll: Story = {
 		text: "Test ".repeat(1000),
 		chunkerConfigs: { 1: chunkerConfig, 2: chunkerConfig, 3: chunkerConfig },
 	},
-	play: async ({ canvasElement, userEvent }) => {
+	play: async ({ canvasElement, step }) => {
+		const elScroller = "chunkedTextVisualizerContainer";
 		const exceptScrollTopValue = async (
+			// biome-ignore lint/suspicious/noExplicitAny: stories
 			canvas: any,
 			scrollTopValue: number,
 		) => {
-			const elements = canvas.getAllByTestId("testVisualizerContainer");
+			const elements = canvas.getAllByTestId(elScroller);
 			for (const el of elements) {
 				await expect(el).toHaveStyleWithTolerance(
 					{ scrollTop: scrollTopValue },
@@ -85,9 +97,19 @@ export const SyncScroll: Story = {
 		};
 
 		const canvas = within(canvasElement);
-		canvas.getAllByTestId("testVisualizerContainer")[0].scrollTo({
-			top: 100,
-			left: 0,
+		await step("scroll", async () => {
+			canvas.getAllByTestId(elScroller)[0].scrollTo({
+				top: 1000,
+				left: 0,
+			});
 		});
+		await exceptScrollTopValue(canvas, 1000);
+		await step("scroll", async () => {
+			canvas.getAllByTestId(elScroller)[1].scrollTo({
+				top: 500,
+				left: 0,
+			});
+		});
+		exceptScrollTopValue(canvas, 500);
 	},
 };
