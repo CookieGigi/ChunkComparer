@@ -7,6 +7,7 @@ import { chunkerConfig, contextDecorator } from "./common";
 
 const meta = {
 	component: ChunkerSelector,
+	decorators: contextDecorator,
 } satisfies Meta<typeof ChunkerSelector>;
 
 export default meta;
@@ -20,7 +21,6 @@ export const Default: Story = {
 		},
 		configs: { 1: chunkerConfig },
 	},
-	decorators: [contextDecorator],
 };
 
 export const Multi: Story = {
@@ -30,7 +30,6 @@ export const Multi: Story = {
 		},
 		configs: { 1: chunkerConfig, 2: chunkerConfig, 3: chunkerConfig },
 	},
-	decorators: [contextDecorator],
 	play: async ({ canvasElement, userEvent }) => {
 		const canvas = within(canvasElement);
 

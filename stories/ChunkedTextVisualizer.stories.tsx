@@ -1,9 +1,11 @@
 import type { Meta, StoryObj } from "storybook-react-rsbuild";
 import ChunkedTextVisualizer from "../src/components/ChunkedTextVisualizer";
 import { Chunk } from "../src/types/Chunk";
+import { contextDecorator } from "./common";
 
 const meta = {
 	component: ChunkedTextVisualizer,
+	decorators: contextDecorator,
 } satisfies Meta<typeof ChunkedTextVisualizer>;
 
 export default meta;

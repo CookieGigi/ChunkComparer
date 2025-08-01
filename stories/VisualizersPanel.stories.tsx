@@ -1,11 +1,12 @@
 import { expect, within } from "@storybook/test";
 import type { Meta, StoryObj } from "storybook-react-rsbuild";
 import VisualizersPanel from "../src/components/VisualizersPanel";
-import { chunkerConfig } from "./common";
+import { chunkerConfig, contextDecorator } from "./common";
 import "./testUtils";
 
 const meta = {
 	component: VisualizersPanel,
+	decorators: contextDecorator,
 } satisfies Meta<typeof VisualizersPanel>;
 
 export default meta;

@@ -1,8 +1,10 @@
 import type { Meta, StoryObj } from "storybook-react-rsbuild";
 import ChunkPartVisualizer from "../src/components/ChunkPartVisualizer";
+import { contextDecorator } from "./common";
 
 const meta = {
 	component: ChunkPartVisualizer,
+	decorators: contextDecorator,
 } satisfies Meta<typeof ChunkPartVisualizer>;
 
 export default meta;
