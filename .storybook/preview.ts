@@ -8,6 +8,13 @@ const preview: Preview = {
 				dark: { name: "Dark", value: "#333" },
 			},
 		},
+		a11y: {
+			test: "error",
+			context: {
+				include: ["body"],
+				exclude: [".no-a11y-check"],
+			},
+		},
 	},
 };
 
