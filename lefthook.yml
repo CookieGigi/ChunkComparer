@@ -1,10 +1,10 @@
 pre-push:
   jobs:
-    - name: packages audit
+    - name: package audit
       tags:
         - frontend
         - security
-      run: npm audit
+      run: yarn audit
 
 pre-commit:
   commands:
