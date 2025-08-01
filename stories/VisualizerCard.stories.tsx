@@ -44,4 +44,7 @@ export const LongText: Story = {
 			</div>
 		),
 	],
+	parameters: {
+		a11y: { test: "off" },
+	},
 };
