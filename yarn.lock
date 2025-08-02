@@ -302,10 +302,10 @@
   resolved "https://registry.yarnpkg.com/@cfworker/json-schema/-/json-schema-4.1.1.tgz#4a2a3947ee9fa7b7c24be981422831b8674c3be6"
   integrity sha512-gAmrUZSGtKc3AiBL71iNWxDsyUC5uMaKKGdvzYsBoTW/xi42JQHl7eKV2OYzCUqvc+D2RCcf7EXY2iCyFIk6og==
 
-"@chromatic-com/storybook@^4.0.1":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@chromatic-com/storybook/-/storybook-4.0.1.tgz#b5c677ce77e5cc366e1e8c71d0f499b728c2ce8a"
-  integrity sha512-GQXe5lyZl3yLewLJQyFXEpOp2h+mfN2bPrzYaOFNCJjO4Js9deKbRHTOSaiP2FRwZqDLdQwy2+SEGeXPZ94yYw==
+"@chromatic-com/storybook@^4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@chromatic-com/storybook/-/storybook-4.1.0.tgz#c246e5006ad8d3f57f4ef9b24f694887470347ae"
+  integrity sha512-B9XesFX5lQUdP81/QBTtkiYOFqEsJwQpzkZlcYPm2n/L1S/8ZabSPbz6NoY8hOJTXWZ2p7grygUlxyGy+gAvfQ==
   dependencies:
     "@neoconfetti/react" "^1.0.0"
     chromatic "^12.0.0"
