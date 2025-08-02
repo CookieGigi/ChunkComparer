@@ -59,6 +59,8 @@ export default function VisualizerCard({
 				ref={scrollRef}
 				onScroll={onScroll}
 				data-testid="chunkedTextVisualizerContainer"
+				// biome-ignore lint/a11y/noNoninteractiveTabindex: accessibility
+				tabIndex={0}
 			>
 				<ChunkedTextVisualizer
 					chunks={chunks}
