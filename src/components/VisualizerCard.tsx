@@ -43,10 +43,12 @@ export default function VisualizerCard({
 		<div className={styles.card}>
 			<div className={styles.cardHeader}>
 				<span className={styles.cardHeaderTitle}>{title}</span>
-				<span className={styles.cardHeaderMetric}>
+				<span className={styles.cardHeaderMetrics}>
 					{" "}
-					<span>{chunks.length} chunks</span>
-					<span className="card-header-metric">
+					<span className={styles.cardHeaderMetric}>
+						{chunks.length} chunks
+					</span>
+					<span className={styles.cardHeaderMetric}>
 						{(
 							chunks.reduce((a, b) => a + b.text.length, 0) / chunks.length
 						).toFixed(1)}{" "}

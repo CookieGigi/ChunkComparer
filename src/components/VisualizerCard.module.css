@@ -10,22 +10,33 @@
 	border-bottom: 1px black solid;
 	display: flex;
 	flex-direction: row;
+	flex-wrap: wrap;
 	justify-content: space-between;
 	gap: 5px;
 }
 
 .card-header-title {
 	font-weight: 700;
-	width: 25%;
+	text-overflow: ellipsis;
+	overflow-wrap: break-word;
+	overflow: hidden;
+	flex-grow: 2;
+}
+
+.card-header-metrics {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	gap: 5px;
+	flex-grow: 1;
 }
 
 .card-header-metric {
 	font-style: italic;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-around;
-	gap: 5px;
-	width: 70%;
+	text-overflow: ellipsis;
+	overflow-wrap: break-word;
+	overflow: hidden;
+	flex-grow: 1;
 }
 
 .card-body {

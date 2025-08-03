@@ -3,6 +3,7 @@
 	flex-direction: column;
 	gap: 5px;
 }
+
 .settingsContainer {
 	display: flex;
 	flex-direction: row;
@@ -14,11 +15,24 @@
 .cardsContainer {
 	display: flex;
 	flex-wrap: wrap;
-	column-gap: calc((100% - max(1500px, 90%)) / 2);
-	row-gap: 20px;
+	justify-content: space-between;
+	gap: 20px;
 }
 
 .cardContainer {
 	min-width: 500px;
 	width: 30%;
+	flex-grow: 1;
+}
+
+@media (max-width: 1024px) {
+	.cardContainer {
+		min-width: 300px;
+	}
+}
+
+@media (max-width: 768px) {
+	.cardContainer {
+		min-width: 250px;
+	}
 }
