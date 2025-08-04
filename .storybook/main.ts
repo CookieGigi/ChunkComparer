@@ -14,7 +14,15 @@ const config: StorybookConfig = {
 		disableTelemetry: true, // 👈 Disables telemetry
 	},
 
-	addons: ["@storybook/addon-a11y", "@chromatic-com/storybook"],
+	addons: [
+		"@storybook/addon-a11y",
+		"@chromatic-com/storybook",
+		"@storybook/addon-docs",
+	],
+	docs: {
+		//👇 See the table below for the list of supported options
+		defaultName: "Documentation",
+	},
 };
 
 export default config;

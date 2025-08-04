@@ -9,7 +9,8 @@
 		"preview": "rsbuild preview",
 		"storybook": "RSDOCTOR= storybook dev -p 6006",
 		"build-storybook": "RSDOCTOR= storybook build",
-		"test-storybook": "test-storybook"
+		"test-storybook": "test-storybook",
+		"storybook-docs": "storybook dev --docs"
 	},
 	"dependencies": {
 		"@langchain/core": "^0.3.66",
