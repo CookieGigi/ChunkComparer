@@ -3,6 +3,7 @@ import type { ChunkerConfig } from "../provider/providerConfig";
 import type { Chunk } from "../types/Chunk";
 import type { Settings } from "../types/Settings";
 import ChunkedTextVisualizer from "./ChunkedTextVisualizer";
+import Modal from "./Modal";
 import styles from "./VisualizerCard.module.css";
 
 export default function VisualizerCard({
@@ -39,8 +40,8 @@ export default function VisualizerCard({
 		computeChunk(text, chunkerConfig);
 	}, [chunkerConfig, text, computeChunk]);
 
-	return (
-		<div className={styles.card}>
+	const CardContent = () => (
+		<>
 			<div className={styles.cardHeader}>
 				<span className={styles.cardHeaderTitle}>{title}</span>
 				<span className={styles.cardHeaderMetrics}>
@@ -69,6 +70,30 @@ export default function VisualizerCard({
 					zoom={settings.zoomValue}
 				></ChunkedTextVisualizer>
 			</div>
-		</div>
+		</>
+	);
+
+	const [modalOpen, setModalOpen] = useState(false);
+	const openModal = () => {
+		setModalOpen(true);
+	};
+	const onClose = () => {
+		setModalOpen(false);
+	};
+
+	return (
+		<>
+			<button
+				type="button"
+				onClick={openModal}
+				className={styles.card}
+				data-TestId="VisualizerCard"
+			>
+				<CardContent></CardContent>
+			</button>
+			<Modal onClose={onClose} isOpen={modalOpen}>
+				<CardContent></CardContent>
+			</Modal>
+		</>
 	);
 }

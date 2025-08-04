@@ -1,4 +1,4 @@
-import { fn } from "@storybook/test";
+import { expect, fn, within } from "@storybook/test";
 // biome-ignore lint/correctness/noUnusedImports: stories
 import React from "react";
 import type { Meta, StoryObj } from "storybook-react-rsbuild";
@@ -44,6 +44,32 @@ export const LongText: Story = {
 			</div>
 		),
 	],
+	parameters: {
+		a11y: { test: "off" },
+	},
+};
+
+export const Modal: Story = {
+	args: {
+		chunkerConfig: chunkerConfig,
+		onScroll: fn(),
+		scrollRef: () => null,
+		text: "Test Test Test Test ".repeat(1000),
+		title: "whiteSpace",
+	},
+	play: async ({ userEvent, canvasElement }) => {
+		const canvas = within(canvasElement);
+
+		await userEvent.click(canvas.getByTestId("VisualizerCard"));
+
+		const modal = canvas.getByTestId("modal");
+
+		expect(modal).toBeVisible();
+
+		await userEvent.click(canvas.getByTestId("modal-close"));
+
+		expect(modal).not.toBeInTheDocument();
+	},
 	parameters: {
 		a11y: { test: "off" },
 	},

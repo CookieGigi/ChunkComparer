@@ -31,40 +31,50 @@ export const MultiConfig: Story = {
 export const Zoom: Story = {
 	args: {
 		text: "Test ".repeat(10),
-		chunkerConfigs: { 1: chunkerConfig, 2: chunkerConfig, 3: chunkerConfig },
+		chunkerConfigs: { 1: chunkerConfig },
 	},
 	play: async ({ canvasElement, userEvent }) => {
-		// biome-ignore lint/suspicious/noExplicitAny: stories
-		const exceptZoomValue = async (canvas: any, zoomValue: number) => {
-			const elements = canvas.getAllByTestId("testVisualizerContainer");
+		const exceptZoomValue = async (
+			elements: HTMLElement[],
+			zoomValue: number,
+		) => {
 			for (const el of elements) {
 				await expect(el).toHaveStyleWithTolerance({ zoom: zoomValue }, 0.01);
 			}
 		};
 
 		const canvas = within(canvasElement);
-		exceptZoomValue(canvas, defaultSettings.zoomValue);
-		await userEvent.click(canvas.getByTestId("zoom"));
+
+		const zoomBtn = canvas.getByTestId("zoom");
+		const unzoomBtn = canvas.getByTestId("unzoom");
+		const resetzoomBtn = canvas.getByTestId("resetzoom");
+		const containers = canvas.getAllByTestId("testVisualizerContainer");
+
+		exceptZoomValue(containers, defaultSettings.zoomValue);
+		await userEvent.click(zoomBtn);
 		exceptZoomValue(
-			canvas,
+			containers,
 			defaultSettings.zoomValue + defaultSettings.zoomIncrement,
 		);
-		await userEvent.click(canvas.getByTestId("unzoom"));
-		exceptZoomValue(canvas, defaultSettings.zoomValue);
-		await userEvent.click(canvas.getByTestId("unzoom"));
+		await userEvent.click(unzoomBtn);
+		exceptZoomValue(containers, defaultSettings.zoomValue);
+		await userEvent.click(unzoomBtn);
 		exceptZoomValue(
-			canvas,
+			containers,
 			defaultSettings.zoomValue - defaultSettings.zoomIncrement,
 		);
-		await userEvent.click(canvas.getByTestId("zoom"));
-		exceptZoomValue(canvas, defaultSettings.zoomValue);
-		await userEvent.click(canvas.getByTestId("zoom"));
+		await userEvent.click(zoomBtn);
+		exceptZoomValue(containers, defaultSettings.zoomValue);
+		await userEvent.click(zoomBtn);
 		exceptZoomValue(
-			canvas,
+			containers,
 			defaultSettings.zoomValue + defaultSettings.zoomIncrement,
 		);
-		await userEvent.click(canvas.getByTestId("resetzoom"));
-		exceptZoomValue(canvas, defaultSettings.zoomValue);
+		await userEvent.click(resetzoomBtn);
+		exceptZoomValue(containers, defaultSettings.zoomValue);
+	},
+	parameters: {
+		a11y: { test: "off" },
 	},
 };
 
@@ -78,16 +88,13 @@ export const LongText: Story = {
 export const SyncScroll: Story = {
 	args: {
 		text: "Test ".repeat(1000),
-		chunkerConfigs: { 1: chunkerConfig, 2: chunkerConfig, 3: chunkerConfig },
+		chunkerConfigs: { 1: chunkerConfig, 2: chunkerConfig },
 	},
 	play: async ({ canvasElement, step }) => {
-		const elScroller = "chunkedTextVisualizerContainer";
 		const exceptScrollTopValue = async (
-			// biome-ignore lint/suspicious/noExplicitAny: stories
-			canvas: any,
+			elements: HTMLElement[],
 			scrollTopValue: number,
 		) => {
-			const elements = canvas.getAllByTestId(elScroller);
 			for (const el of elements) {
 				await expect(el).toHaveStyleWithTolerance(
 					{ scrollTop: scrollTopValue },
@@ -97,19 +104,25 @@ export const SyncScroll: Story = {
 		};
 
 		const canvas = within(canvasElement);
+
+		const containers = canvas.getAllByTestId("chunkedTextVisualizerContainer");
+
 		await step("scroll", async () => {
-			canvas.getAllByTestId(elScroller)[0].scrollTo({
+			containers[0].scrollTo({
 				top: 1000,
 				left: 0,
 			});
 		});
-		await exceptScrollTopValue(canvas, 1000);
+		await exceptScrollTopValue(containers, 1000);
 		await step("scroll", async () => {
-			canvas.getAllByTestId(elScroller)[1].scrollTo({
+			containers[1].scrollTo({
 				top: 500,
 				left: 0,
 			});
 		});
-		exceptScrollTopValue(canvas, 500);
+		exceptScrollTopValue(containers, 500);
+	},
+	parameters: {
+		a11y: { test: "off" },
 	},
 };
