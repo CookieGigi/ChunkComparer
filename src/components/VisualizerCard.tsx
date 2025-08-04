@@ -13,6 +13,7 @@ export default function VisualizerCard({
 	settings,
 	scrollRef,
 	onScroll,
+	initialConfigCollapsed,
 }: {
 	text: string | undefined;
 	chunkerConfig: ChunkerConfig;
@@ -20,8 +21,12 @@ export default function VisualizerCard({
 	settings: Settings;
 	scrollRef: (el: HTMLDivElement | null) => void;
 	onScroll: () => void;
+	initialConfigCollapsed: boolean | undefined;
 }) {
 	const [chunks, setChunks] = useState<Chunk[]>([]);
+	const [isCollapsed, setIsCollapsed] = useState(
+		initialConfigCollapsed ?? true,
+	);
 
 	const computeChunk = useCallback(
 		(text: string | undefined, chunkerConfig: ChunkerConfig | undefined) => {
@@ -39,6 +44,12 @@ export default function VisualizerCard({
 	useEffect(() => {
 		computeChunk(text, chunkerConfig);
 	}, [chunkerConfig, text, computeChunk]);
+
+	const toggleCollapse: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		setIsCollapsed(!isCollapsed);
+	};
 
 	const CardContent = () => (
 		<>
@@ -81,6 +92,25 @@ export default function VisualizerCard({
 		setModalOpen(false);
 	};
 
+	const Config = () => (
+		<>
+			<button
+				type="button"
+				onClick={toggleCollapse}
+				className={styles.collapseButton}
+				data-TestId="collapseConfig"
+			>
+				{isCollapsed ? "Show Config" : "Hide Config"}
+			</button>
+			<div
+				className={`${styles.collapsibleContent} ${isCollapsed ? styles.collapsed : ""}`}
+				data-TestId="collapseConfigContent"
+			>
+				<p>{chunkerConfig.toString()}</p>
+			</div>
+		</>
+	);
+
 	return (
 		<>
 			<button
@@ -91,8 +121,11 @@ export default function VisualizerCard({
 			>
 				<CardContent></CardContent>
 			</button>
+			<Config></Config>
+
 			<Modal onClose={onClose} isOpen={modalOpen}>
 				<CardContent></CardContent>
+				<Config></Config>
 			</Modal>
 		</>
 	);

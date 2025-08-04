@@ -25,6 +25,10 @@ export class ChunkerConfig {
 	InstantiateChunker() {
 		return new this.type(this.config);
 	}
+
+	toString() {
+		return JSON.stringify(this.config);
+	}
 }
 
 export const configs: { [key: string]: ChunkerConfig } = {
