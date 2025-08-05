@@ -22,4 +22,12 @@ export default class LatexTextChunker
 		// Hacky override
 		return docs.join(separator);
 	}
+
+	toExampleCode(config: object): string {
+		return (
+			'import { LatexTextSplitter } from "langchain/text_splitter";\n' +
+			`const textSplitter = LatexTextSplitter(${JSON.stringify(config).replace(/"([^"]+)":/g, "$1:")});\n` +
+			"const textSplit = textSplitter.splitText();"
+		);
+	}
 }

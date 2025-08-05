@@ -3,6 +3,7 @@ import type { ChunkerConfig } from "../provider/providerConfig";
 import type { Chunk } from "../types/Chunk";
 import type { Settings } from "../types/Settings";
 import ChunkedTextVisualizer from "./ChunkedTextVisualizer";
+import ChunkerConfigVisualizer from "./ChunkerConfigVisualizer";
 import Modal from "./Modal";
 import styles from "./VisualizerCard.module.css";
 
@@ -106,7 +107,9 @@ export default function VisualizerCard({
 				className={`${styles.collapsibleContent} ${isCollapsed ? styles.collapsed : ""}`}
 				data-TestId="collapseConfigContent"
 			>
-				<p>{chunkerConfig.toString()}</p>
+				<ChunkerConfigVisualizer
+					config={chunkerConfig}
+				></ChunkerConfigVisualizer>
 			</div>
 		</>
 	);

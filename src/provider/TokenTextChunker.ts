@@ -24,4 +24,12 @@ export default class TokenTextChunker
 		// Hacky override
 		return docs.join(separator);
 	}
+
+	toExampleCode(config: object): string {
+		return (
+			'import { TokenTextSplitter } from "langchain/text_splitter";\n' +
+			`const textSplitter = TokenTextSplitter(${JSON.stringify(config).replace(/"([^"]+)":/g, "$1:")});\n` +
+			"const textSplit = textSplitter.splitText();"
+		);
+	}
 }

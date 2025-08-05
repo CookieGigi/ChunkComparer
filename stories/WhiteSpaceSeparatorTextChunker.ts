@@ -12,4 +12,8 @@ export default class WhiteSpaceSeparatorTextChunker implements ITextChunker {
 
 		return res;
 	}
+
+	toExampleCode(config: object): string {
+		return "";
+	}
 }

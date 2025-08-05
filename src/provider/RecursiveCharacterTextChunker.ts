@@ -24,4 +24,12 @@ export default class RecursiveCharacterTextChunker
 		// Hacky override
 		return docs.join(separator);
 	}
+
+	toExampleCode(config: object): string {
+		return (
+			'import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";\n' +
+			`const textSplitter = RecursiveCharacterTextSplitter(${JSON.stringify(config).replace(/"([^"]+)":/g, "$1:")});\n` +
+			"const textSplit = textSplitter.splitText();"
+		);
+	}
 }
