@@ -1,4 +1,4 @@
-import { a11yLight, CopyBlock, dracula } from "react-code-blocks";
+import SyntaxHighlighter from "react-syntax-highlighter";
 import type { ChunkerConfig } from "../provider/providerConfig";
 
 export default function ChunkerConfigVisualizer({
@@ -10,23 +10,15 @@ export default function ChunkerConfigVisualizer({
 		<div>
 			<p>Config</p>
 			<div>
-				<CopyBlock
-					text={config.toString()}
-					language="json"
-					showLineNumbers={true}
-					wrapLongLines
-					theme={a11yLight}
-				></CopyBlock>
+				<SyntaxHighlighter language="json" showLineNumbers wrapLines>
+					{config.toString()}
+				</SyntaxHighlighter>
 			</div>
 			<p>Code</p>
 			<div>
-				<CopyBlock
-					text={config.toExampleCode()}
-					language="ts"
-					showLineNumbers
-					wrapLongLines
-					theme={a11yLight}
-				></CopyBlock>
+				<SyntaxHighlighter language="typescript" showLineNumbers wrapLines>
+					{config.toExampleCode()}
+				</SyntaxHighlighter>
 			</div>
 		</div>
 	);
