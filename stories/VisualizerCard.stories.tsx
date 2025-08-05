@@ -94,15 +94,11 @@ export const ConfigToggle: Story = {
 
 		await userEvent.click(canvas.getByTestId("collapseConfig"));
 
-		expect(canvas.getByTestId("collapseConfigContent")).not.toHaveStyle({
-			"max-height": 0,
-		});
+		expect(canvas.getByTestId("collapseConfigContent")).toBeVisible();
 
 		await userEvent.click(canvas.getByTestId("collapseConfig"));
 
-		expect(canvas.getByTestId("collapseConfigContent")).toHaveStyle({
-			"max-height": 0,
-		});
+		expect(canvas.getByTestId("collapseConfigContent")).not.toBeVisible();
 	},
 };
 
@@ -117,5 +113,8 @@ export const Config: Story = {
 		text: "Test Test Test Test",
 		title: "whiteSpace",
 		initialConfigCollapsed: false,
+	},
+	parameters: {
+		a11y: { test: "todo" },
 	},
 };

@@ -1,4 +1,4 @@
-import { CopyBlock, dracula } from "react-code-blocks";
+import { a11yLight, CopyBlock, dracula } from "react-code-blocks";
 import type { ChunkerConfig } from "../provider/providerConfig";
 
 export default function ChunkerConfigVisualizer({
@@ -9,21 +9,25 @@ export default function ChunkerConfigVisualizer({
 	return (
 		<div>
 			<p>Config</p>
-			<CopyBlock
-				text={config.toString()}
-				language="json"
-				showLineNumbers={true}
-				wrapLongLines
-				theme={dracula}
-			></CopyBlock>
+			<div>
+				<CopyBlock
+					text={config.toString()}
+					language="json"
+					showLineNumbers={true}
+					wrapLongLines
+					theme={a11yLight}
+				></CopyBlock>
+			</div>
 			<p>Code</p>
-			<CopyBlock
-				text={config.toExampleCode()}
-				language="ts"
-				showLineNumbers
-				wrapLongLines
-				theme={dracula}
-			></CopyBlock>
+			<div>
+				<CopyBlock
+					text={config.toExampleCode()}
+					language="ts"
+					showLineNumbers
+					wrapLongLines
+					theme={a11yLight}
+				></CopyBlock>
+			</div>
 		</div>
 	);
 }
