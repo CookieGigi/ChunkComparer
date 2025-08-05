@@ -31,7 +31,7 @@ export class ChunkerConfig {
 	}
 
 	toExampleCode() {
-		return new this.type(this.config).toExampleCode(this.config);
+		return this.InstantiateChunker().toExampleCode(this.config);
 	}
 }
 
