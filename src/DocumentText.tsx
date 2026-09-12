@@ -23,6 +23,7 @@ export default function DocumentText({
         (chunk.start >= chunks[index - 1].start! &&
           chunk.end >= chunks[index - 1].end!)),
   );
+  const selected = selectedIndex === undefined ? undefined : chunks[selectedIndex];
 
   return (
     <div className={styles.documentText}>
@@ -37,6 +38,31 @@ export default function DocumentText({
           mapped && next
             ? Math.min(content.length, Math.max(0, chunk.end! - next.start!))
             : 0;
+        const contentStart = mapped ? Math.max(previousEnd, chunk.start!) : 0;
+        // Overlap may be displayed in earlier spans, but still belongs to the selected chunk.
+        const selectionStart =
+          mapped && selected
+            ? Math.max(0, Math.min(content.length, selected.start! - contentStart))
+            : 0;
+        const selectionEnd =
+          mapped && selected
+            ? Math.max(0, Math.min(content.length, selected.end! - contentStart))
+            : selectedIndex === index
+              ? content.length
+              : 0;
+        const renderContent = (start: number, end: number) => {
+          const overlapStart = content.length - shared;
+          return (
+            <>
+              {content.slice(start, Math.min(end, Math.max(start, overlapStart)))}
+              {end > Math.max(start, overlapStart) && (
+                <mark title="Verified overlap with the next chunk">
+                  {content.slice(Math.max(start, overlapStart), end)}
+                </mark>
+              )}
+            </>
+          );
+        };
         return (
           <Fragment key={index}>
             {mapped
@@ -46,7 +72,7 @@ export default function DocumentText({
                 : ""}
             <span
               data-chunk={index}
-              className={`${styles.inlineChunk} ${selectedIndex === index ? styles.inlineSelected : ""}`}
+              className={styles.inlineChunk}
               role="button"
               tabIndex={0}
               aria-pressed={selectedIndex === index}
@@ -62,12 +88,13 @@ export default function DocumentText({
                 }
               }}
             >
-              {content.slice(0, content.length - shared)}
-              {shared > 0 && (
-                <mark title="Verified overlap with the next chunk">
-                  {content.slice(content.length - shared)}
-                </mark>
+              {renderContent(0, selectionStart)}
+              {selectionEnd > selectionStart && (
+                <span className={styles.inlineSelected}>
+                  {renderContent(selectionStart, selectionEnd)}
+                </span>
               )}
+              {renderContent(Math.max(selectionStart, selectionEnd), content.length)}
             </span>
           </Fragment>
         );
