@@ -1,4 +1,84 @@
 export const samples = {
+  python: `class Garden:
+    def __init__(self):
+        self.plants = []
+
+    def add_plant(self, name, sunlight):
+        self.plants.append({"name": name, "sunlight": sunlight})
+
+    def sunny_plants(self):
+        return [plant for plant in self.plants if plant["sunlight"] == "full"]
+
+def describe_garden(garden):
+    for plant in garden.sunny_plants():
+        print(f"{plant['name']} needs a sunny spot and regular watering.")
+
+def main():
+    garden = Garden()
+    garden.add_plant("Rosemary", "full")
+    garden.add_plant("Mint", "partial")
+    describe_garden(garden)
+
+if __name__ == "__main__":
+    main()
+`,
+  javascript: `class Garden {
+  constructor() {
+    this.plants = [];
+  }
+
+  addPlant(name, sunlight) {
+    this.plants.push({ name, sunlight });
+  }
+}
+
+function sunnyPlants(garden) {
+  return garden.plants.filter((plant) => plant.sunlight === "full");
+}
+
+function describeGarden(garden) {
+  for (const plant of sunnyPlants(garden)) {
+    console.log(plant.name + " needs a sunny spot and regular watering.");
+  }
+}
+
+function main() {
+  const garden = new Garden();
+  garden.addPlant("Rosemary", "full");
+  garden.addPlant("Mint", "partial");
+  describeGarden(garden);
+}
+
+main();
+`,
+  html: `<!doctype html>
+<html lang="en">
+<head>
+  <title>A small urban garden</title>
+</head>
+<body>
+  <header>
+    <h1>A small urban garden</h1>
+    <p>A practical guide to growing plants in limited space.</p>
+  </header>
+  <main>
+    <section id="planning">
+      <h2>Planning the space</h2>
+      <p>Observe sunlight before choosing plants. Record the light at breakfast, midday, and late afternoon.</p>
+    </section>
+    <section id="care">
+      <h2>Planting and care</h2>
+      <p>Water deeply rather than frequently. Check the soil before reaching for the watering can.</p>
+      <ul>
+        <li>Choose containers with drainage holes.</li>
+        <li>Leave enough room for roots to grow.</li>
+      </ul>
+    </section>
+  </main>
+  <footer>Keep a notebook and review your observations each month.</footer>
+</body>
+</html>
+`,
   prose: `The art of chunking
 
 A document is more than a sequence of characters. It has a rhythm: ideas unfold in sentences, sentences gather into paragraphs, and paragraphs build an argument. Splitting that document means deciding which of those relationships to preserve.

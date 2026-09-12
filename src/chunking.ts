@@ -1,4 +1,20 @@
-export type Method = "character" | "recursive" | "token" | "markdown" | "latex";
+export type Method =
+  | "character"
+  | "paragraph"
+  | "line"
+  | "recursive"
+  | "token"
+  | "markdown"
+  | "latex"
+  | "python"
+  | "javascript"
+  | "html";
+
+const languages = {
+  python: "python",
+  javascript: "js",
+  html: "html",
+} as const;
 
 export type Strategy = {
   id: string;
@@ -15,6 +31,18 @@ export const methods: Record<
     label: "Character",
     description:
       "Fixed-size character windows; LangChain trims boundary whitespace.",
+    unit: "characters",
+  },
+  paragraph: {
+    label: "Paragraph",
+    description:
+      "Packs blank-line-separated paragraphs; a whole paragraph may exceed the size target.",
+    unit: "characters",
+  },
+  line: {
+    label: "Line",
+    description:
+      "Packs whole lines, useful for logs; a single line may exceed the size target.",
     unit: "characters",
   },
   recursive: {
@@ -39,6 +67,24 @@ export const methods: Record<
     label: "LaTeX",
     description:
       "Recursive splitting using LaTeX sections and environment boundaries.",
+    unit: "characters",
+  },
+  python: {
+    label: "Python",
+    description:
+      "Recursive splitting using Python class and function boundaries; not a syntax parser.",
+    unit: "characters",
+  },
+  javascript: {
+    label: "JavaScript",
+    description:
+      "Recursive splitting using JavaScript function and control-flow boundaries; not a syntax parser.",
+    unit: "characters",
+  },
+  html: {
+    label: "HTML",
+    description:
+      "Recursive splitting at HTML tag boundaries; preserves raw markup, not rendered text.",
     unit: "characters",
   },
 };
@@ -72,6 +118,12 @@ function splitterOptions(strategy: Strategy) {
     chunkSize: strategy.size,
     chunkOverlap: strategy.overlap,
     ...(strategy.method === "character" ? { separator: "" } : {}),
+    ...(strategy.method === "paragraph"
+      ? { separator: "\n\n", keepSeparator: true }
+      : {}),
+    ...(strategy.method === "line"
+      ? { separator: "\n", keepSeparator: true }
+      : {}),
     ...(strategy.method === "token" ? { encodingName: "gpt2" as const } : {}),
   };
 }
@@ -91,12 +143,20 @@ export async function splitStrategy(
   } = await import("langchain/text_splitter");
   const splitters = {
     character: CharacterTextSplitter,
+    paragraph: CharacterTextSplitter,
+    line: CharacterTextSplitter,
     recursive: RecursiveCharacterTextSplitter,
     token: TokenTextSplitter,
     markdown: MarkdownTextSplitter,
     latex: LatexTextSplitter,
+    python: RecursiveCharacterTextSplitter,
+    javascript: RecursiveCharacterTextSplitter,
+    html: RecursiveCharacterTextSplitter,
   };
-  const splitter = new splitters[strategy.method](options);
+  const language = languages[strategy.method as keyof typeof languages];
+  const splitter = language
+    ? RecursiveCharacterTextSplitter.fromLanguage(language, options)
+    : new splitters[strategy.method](options);
   const chunks = await splitter.splitText(text);
   if (chunks.length > 10_000) {
     throw new RangeError(
@@ -131,10 +191,19 @@ export function exampleCode(strategy: Strategy): string {
   // Explicit names keep snippets valid in minified production builds.
   const name = {
     character: "CharacterTextSplitter",
+    paragraph: "CharacterTextSplitter",
+    line: "CharacterTextSplitter",
     recursive: "RecursiveCharacterTextSplitter",
     token: "TokenTextSplitter",
     markdown: "MarkdownTextSplitter",
     latex: "LatexTextSplitter",
+    python: "RecursiveCharacterTextSplitter",
+    javascript: "RecursiveCharacterTextSplitter",
+    html: "RecursiveCharacterTextSplitter",
   }[strategy.method];
-  return `import { ${name} } from "langchain/text_splitter";\n\nconst text = "Your text to split";\nconst splitter = new ${name}(${JSON.stringify(options, null, 2)});\nconst chunks = await splitter.splitText(text);`;
+  const language = languages[strategy.method as keyof typeof languages];
+  const constructor = language
+    ? `${name}.fromLanguage(${JSON.stringify(language)}, ${JSON.stringify(options, null, 2)})`
+    : `new ${name}(${JSON.stringify(options, null, 2)})`;
+  return `import { ${name} } from "langchain/text_splitter";\n\nconst text = "Your text to split";\nconst splitter = ${constructor};\nconst chunks = await splitter.splitText(text);`;
 }

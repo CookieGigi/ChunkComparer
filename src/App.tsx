@@ -201,7 +201,7 @@ export default function App() {
             hidden
             ref={upload}
             type="file"
-            accept=".txt,.md,.tex,.csv,.json,text/*"
+            accept=".txt,.md,.tex,.csv,.json,.py,.js,.html,text/*"
             onChange={async (event) => {
               const file = event.target.files?.[0];
               event.target.value = "";
@@ -272,6 +272,9 @@ export default function App() {
                 <option value="prose">Prose / The art of chunking</option>
                 <option value="markdown">Markdown / Field notes</option>
                 <option value="latex">LaTeX / Research abstract</option>
+                <option value="python">Python / Garden inventory</option>
+                <option value="javascript">JavaScript / Garden inventory</option>
+                <option value="html">HTML / Garden guide</option>
               </select>
             </label>
             <label className={styles.srOnly} htmlFor="source">

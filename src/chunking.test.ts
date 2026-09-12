@@ -11,6 +11,7 @@ import {
 } from "langchain/text_splitter";
 import { exampleCode, methods, splitStrategy } from "./chunking.ts";
 import type { Method, Strategy } from "./chunking.ts";
+import { samples } from "./samples.ts";
 
 const strategy: Strategy = {
   id: "test",
@@ -82,24 +83,42 @@ test("a mapped chunk following an ambiguous chunk has no inferred overlap", asyn
 
 const constructors = {
   character: CharacterTextSplitter,
+  paragraph: CharacterTextSplitter,
+  line: CharacterTextSplitter,
   recursive: RecursiveCharacterTextSplitter,
   token: TokenTextSplitter,
   markdown: MarkdownTextSplitter,
   latex: LatexTextSplitter,
+  python: RecursiveCharacterTextSplitter,
+  javascript: RecursiveCharacterTextSplitter,
+  html: RecursiveCharacterTextSplitter,
 };
 
 for (const method of Object.keys(methods) as Method[]) {
   test(`${method} preserves native splitter output and emits executable equivalent examples`, async () => {
     const config = { ...strategy, method, size: 32, overlap: 7 };
     const input =
-      "  # First heading\n\nAlpha beta gamma delta epsilon.\n\n## Next\n\n```ts\nconst n = 1;\n```\n\\section{Details}\nA different paragraph with unique words.  ";
+      method === "python" || method === "javascript" || method === "html"
+        ? samples[method]
+        : "  # First heading\n\nAlpha beta gamma delta epsilon.\n\n## Next\n\n```ts\nconst n = 1;\n```\n\\section{Details}\nA different paragraph with unique words.  ";
     const options = {
       chunkSize: config.size,
       chunkOverlap: config.overlap,
       ...(method === "character" ? { separator: "" } : {}),
+      ...(method === "paragraph"
+        ? { separator: "\n\n", keepSeparator: true }
+        : {}),
+      ...(method === "line" ? { separator: "\n", keepSeparator: true } : {}),
       ...(method === "token" ? { encodingName: "gpt2" as const } : {}),
     };
-    const expected = await new constructors[method](options).splitText(input);
+    const native =
+      method === "python" || method === "javascript" || method === "html"
+        ? RecursiveCharacterTextSplitter.fromLanguage(
+            method === "javascript" ? "js" : method,
+            options,
+          )
+        : new constructors[method](options);
+    const expected = await native.splitText(input);
     const actual = await splitStrategy(input, config);
     assert.deepEqual(
       actual.map((chunk) => chunk.text),
@@ -155,6 +174,28 @@ test("token overlap is measured in source characters, not tokens", async () => {
   assert.ok(chunks.some((chunk) => chunk.overlap > 1));
   for (const chunk of chunks) assert.notEqual(chunk.start, null);
 });
+
+for (const method of ["paragraph", "line"] as const) {
+  test(`${method} preserves oversized units and packs smaller units with separators`, async () => {
+    const separator = method === "paragraph" ? "\n\n" : "\n";
+    const units = ["An oversized unit stays intact.", "abc", "def", "ghi"];
+    const input = units.join(separator);
+    const chunks = await splitStrategy(input, {
+      ...strategy,
+      method,
+      size: 10,
+      overlap: 0,
+    });
+    assert.deepEqual(
+      chunks.map((chunk) => chunk.text),
+      [units[0], `abc${separator}def`, "ghi"],
+    );
+    for (const chunk of chunks) {
+      assert.notEqual(chunk.start, null);
+      assert.equal(input.slice(chunk.start!, chunk.end!), chunk.text);
+    }
+  });
+}
 
 test("token decoding that cannot be matched is preserved without invented offsets", async () => {
   const input = "\u{1f600}\u{1f680}\u6f22\u5b57";
