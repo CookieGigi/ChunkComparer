@@ -11,11 +11,11 @@ This project serves as a learning exercise for me with two main goals:
 ## Installation
 1. Clone the repository: `git clone https://github.com/yourusername/ChunkComparer.git`
 2. Navigate to the project directory: `cd ChunkComparer`
-3. Install dependencies: `yarn`
-4. Start the development server: `yarn dev`
+3. Install dependencies: `pnpm install`
+4. Start the development server: `pnpm dev`
 
 ## Usage
-1. Open your web browser and navigate to `http://localhost:3000`
+1. Open your web browser and navigate to `http://localhost:5173`
 2. Use the interface to visualize and compare different text-splitting methods.
 ![ScreenShot of ChunkComparer](./assets/screenShotChunkComparer.png)
 
